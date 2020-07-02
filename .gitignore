@@ -1,0 +1,17 @@
+﻿##files##
+*.suo
+*.dll
+*.exe
+*.user
+*.bak
+*.log
+*.sqlite
+*.xml
+
+##folders##
+bin/
+obj/
+packages/
+.vs/
+
+**/*.xml
