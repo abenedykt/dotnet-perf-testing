@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +14,7 @@ namespace webapp.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
+        private readonly Random _random = new Random();
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
@@ -26,14 +25,19 @@ namespace webapp.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
+            return Enumerable.Range(1, 10)
+            .Select(GenerateWeather)
             .ToArray();
+        }
+
+        private WeatherForecast GenerateWeather(int day)
+        {   
+            return new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(day),
+                TemperatureC = _random.Next(-20, 55),
+                Summary = Summaries[_random.Next(Summaries.Length)]
+            };
         }
     }
 }
